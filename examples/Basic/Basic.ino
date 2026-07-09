@@ -1,8 +1,8 @@
 #include <WiFi.h>
 #include <CrealityKE.h>
 
-const char* ssid = "YOUR_WIFI";
-const char* password = "YOUR_PASSWORD";
+const char* ssid="YOUR_WIFI";
+const char* password="YOUR_PASSWORD";
 
 CrealityKE printer;
 
