@@ -1,6 +1,8 @@
 ﻿#ifndef STATUS_H
 #define STATUS_H
 
+#include <Arduino.h>
+
 class Parser;
 
 // Stores the latest printer status
@@ -22,52 +24,69 @@ public:
     // Target bed temperature
     int targetBedTemp() const;
 
-    // Print progress (0-100)
+    // Print progress
     int progress() const;
 
-    // Current printing layer
+    // Current layer
     int currentLayer() const;
 
-    // Total print layers
+    // Total layers
     int totalLayers() const;
 
-    // Elapsed print time (seconds)
+    // Elapsed print time
     int printTime() const;
 
-    // Remaining print time (seconds)
+    // Remaining print time
     int remainingTime() const;
 
     // Printer state
     int state() const;
 
-    // Main fan status
+    // Main fan state
     bool fan() const;
 
-    // Model fan speed (0-100)
+    // Model fan speed
     int modelFan() const;
 
-    // Case fan speed (0-100)
+    // Case fan speed
     int caseFan() const;
 
-    // Auxiliary fan speed (0-100)
+    // Auxiliary fan speed
     int auxiliaryFan() const;
 
     // Filament sensor enabled
     bool materialDetected() const;
 
-    // Filament available
+    // Filament detected
     bool materialStatus() const;
+
+    // Printer hostname
+    const String& hostname() const;
+
+    // Printer model
+    const String& model() const;
+
+    // Firmware version
+    const String& version() const;
+
+    // Printer connection state
+    bool connected() const;
+
+    // Maximum nozzle temperature
+    int maxNozzleTemp() const;
+
+    // Maximum bed temperature
+    int maxBedTemp() const;
 
 private:
 
-    // Allow parser to update values
     friend class Parser;
 
-    // Temperature data
+    // Temperature
     float _nozzleTemp = 0.0f;
     float _bedTemp = 0.0f;
 
-    // Target temperatures
+    // Target temperature
     int _targetNozzleTemp = 0;
     int _targetBedTemp = 0;
 
@@ -83,7 +102,7 @@ private:
     // Printer state
     int _state = 0;
 
-    // Cooling system
+    // Cooling
     bool _fan = false;
     int _modelFan = 0;
     int _caseFan = 0;
@@ -92,6 +111,16 @@ private:
     // Material sensor
     bool _materialDetected = false;
     bool _materialStatus = false;
+
+    // Device information
+    String _hostname;
+    String _model;
+    String _version;
+
+    bool _connected = false;
+
+    int _maxNozzleTemp = 0;
+    int _maxBedTemp = 0;
 };
 
 #endif

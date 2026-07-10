@@ -51,7 +51,7 @@ public:
     // Printer state
     int state() const;
 
-    // Main fan status
+    // Main fan state
     bool fan() const;
 
     // Model fan speed
@@ -66,8 +66,26 @@ public:
     // Filament sensor enabled
     bool materialDetected() const;
 
-    // Filament status
+    // Filament detected
     bool materialStatus() const;
+
+    // Printer hostname
+    const String& hostname() const;
+
+    // Printer model
+    const String& model() const;
+
+    // Firmware information
+    const String& version() const;
+
+    // Printer connection status
+    bool connected() const;
+
+    // Maximum nozzle temperature
+    int maxNozzleTemp() const;
+
+    // Maximum bed temperature
+    int maxBedTemp() const;
 
 private:
 

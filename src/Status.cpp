@@ -30,13 +30,13 @@ int PrinterStatus::progress() const
     return _progress;
 }
 
-// Return current layer
+// Return current printing layer
 int PrinterStatus::currentLayer() const
 {
     return _currentLayer;
 }
 
-// Return total layers
+// Return total printing layers
 int PrinterStatus::totalLayers() const
 {
     return _totalLayers;
@@ -60,7 +60,7 @@ int PrinterStatus::state() const
     return _state;
 }
 
-// Return main fan status
+// Return main fan state
 bool PrinterStatus::fan() const
 {
     return _fan;
@@ -84,14 +84,50 @@ int PrinterStatus::auxiliaryFan() const
     return _auxiliaryFan;
 }
 
-// Return filament sensor state
+// Return filament sensor enabled state
 bool PrinterStatus::materialDetected() const
 {
     return _materialDetected;
 }
 
-// Return filament status
+// Return filament presence
 bool PrinterStatus::materialStatus() const
 {
     return _materialStatus;
+}
+
+// Return printer hostname
+const String& PrinterStatus::hostname() const
+{
+    return _hostname;
+}
+
+// Return printer model
+const String& PrinterStatus::model() const
+{
+    return _model;
+}
+
+// Return firmware version
+const String& PrinterStatus::version() const
+{
+    return _version;
+}
+
+// Return printer connection state
+bool PrinterStatus::connected() const
+{
+    return _connected;
+}
+
+// Return maximum nozzle temperature
+int PrinterStatus::maxNozzleTemp() const
+{
+    return _maxNozzleTemp;
+}
+
+// Return maximum bed temperature
+int PrinterStatus::maxBedTemp() const
+{
+    return _maxBedTemp;
 }

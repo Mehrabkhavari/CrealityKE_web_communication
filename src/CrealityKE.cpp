@@ -81,7 +81,7 @@ int CrealityKE::state() const
     return status.state();
 }
 
-// Return main fan status
+// Return main fan state
 bool CrealityKE::fan() const
 {
     return status.fan();
@@ -105,14 +105,50 @@ int CrealityKE::auxiliaryFan() const
     return status.auxiliaryFan();
 }
 
-// Return filament sensor status
+// Return filament sensor enabled state
 bool CrealityKE::materialDetected() const
 {
     return status.materialDetected();
 }
 
-// Return filament availability
+// Return filament presence
 bool CrealityKE::materialStatus() const
 {
     return status.materialStatus();
+}
+
+// Return printer hostname
+const String& CrealityKE::hostname() const
+{
+    return status.hostname();
+}
+
+// Return printer model
+const String& CrealityKE::model() const
+{
+    return status.model();
+}
+
+// Return firmware information
+const String& CrealityKE::version() const
+{
+    return status.version();
+}
+
+// Return printer connection state
+bool CrealityKE::connected() const
+{
+    return status.connected();
+}
+
+// Return maximum nozzle temperature
+int CrealityKE::maxNozzleTemp() const
+{
+    return status.maxNozzleTemp();
+}
+
+// Return maximum bed temperature
+int CrealityKE::maxBedTemp() const
+{
+    return status.maxBedTemp();
 }

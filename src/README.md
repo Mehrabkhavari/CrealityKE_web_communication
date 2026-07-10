@@ -2,7 +2,7 @@
 
 An open-source ESP32 library for communicating with Creality printers over WebSocket.
 
-> **Current Version:** v0.5.0
+> **Current Version:** v0.6.0
 
 ---
 
@@ -11,15 +11,11 @@ An open-source ESP32 library for communicating with Creality printers over WebSo
 - WebSocket communication
 - Automatic reconnection
 - JSON message parsing
-- Nozzle temperature
-- Bed temperature
-- Target temperatures
-- Print progress
-- Layer information
-- Print time
-- Printer state
+- Temperature monitoring
+- Print status monitoring
 - Cooling system monitoring
 - Filament sensor monitoring
+- Device information
 - Lightweight architecture
 - Optimized for ESP32
 
@@ -56,7 +52,7 @@ Documents/
 
 ---
 
-## Quick Start
+# Quick Start
 
 ```cpp
 #include <WiFi.h>
@@ -85,15 +81,14 @@ void loop()
 {
     printer.loop();
 
-    Serial.print("Nozzle: ");
+    Serial.println(printer.hostname());
+    Serial.println(printer.model());
+
+    Serial.print("Nozzle : ");
     Serial.println(printer.nozzleTemp());
 
-    Serial.print("Bed: ");
+    Serial.print("Bed : ");
     Serial.println(printer.bedTemp());
-
-    Serial.print("Progress: ");
-    Serial.print(printer.progress());
-    Serial.println("%");
 
     delay(1000);
 }
@@ -155,25 +150,25 @@ Print progress.
 printer.currentLayer();
 ```
 
-Current layer.
+Current printing layer.
 
 ```cpp
 printer.totalLayers();
 ```
 
-Total layers.
+Total printing layers.
 
 ```cpp
 printer.printTime();
 ```
 
-Elapsed print time (seconds).
+Elapsed print time.
 
 ```cpp
 printer.remainingTime();
 ```
 
-Remaining print time (seconds).
+Remaining print time.
 
 ```cpp
 printer.state();
@@ -189,29 +184,29 @@ Printer state.
 printer.fan();
 ```
 
-Main fan status.
+Main fan state.
 
 ```cpp
 printer.modelFan();
 ```
 
-Model fan speed (%).
+Model fan speed.
 
 ```cpp
 printer.caseFan();
 ```
 
-Case fan speed (%).
+Case fan speed.
 
 ```cpp
 printer.auxiliaryFan();
 ```
 
-Auxiliary fan speed (%).
+Auxiliary fan speed.
 
 ---
 
-## Material Sensor
+## Material
 
 ```cpp
 printer.materialDetected();
@@ -223,7 +218,47 @@ Returns whether the filament sensor is enabled.
 printer.materialStatus();
 ```
 
-Returns whether filament is detected.
+Returns whether filament is present.
+
+---
+
+## Device Information
+
+```cpp
+printer.hostname();
+```
+
+Printer hostname.
+
+```cpp
+printer.model();
+```
+
+Printer model.
+
+```cpp
+printer.version();
+```
+
+Firmware information.
+
+```cpp
+printer.connected();
+```
+
+Printer connection state.
+
+```cpp
+printer.maxNozzleTemp();
+```
+
+Maximum supported nozzle temperature.
+
+```cpp
+printer.maxBedTemp();
+```
+
+Maximum supported bed temperature.
 
 ---
 
@@ -247,6 +282,12 @@ The parser currently supports:
 - auxiliaryFanPct
 - materialDetect
 - materialStatus
+- hostname
+- model
+- modelVersion
+- connect
+- maxNozzleTemp
+- maxBedTemp
 
 ---
 
@@ -290,7 +331,7 @@ PrinterStatus
 Public API
 ```
 
-Each module has a single responsibility, making the library easy to maintain and extend.
+Each module has a single responsibility, making the library easy to extend and maintain.
 
 ---
 
@@ -298,12 +339,12 @@ Each module has a single responsibility, making the library easy to maintain and
 
 Planned features:
 
-- Printer information
-- Motion information
-- AI detection status
-- Camera status
-- Remote printer control
+- Printer control
 - G-code commands
+- Motion status
+- AI detection
+- Camera status
+- Timelapse
 - Multi-printer support
 
 ---
