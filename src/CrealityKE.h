@@ -33,15 +33,33 @@ public:
     // Target bed temperature
     int targetBedTemp() const;
 
+    // Print progress (0-100)
+    int progress() const;
+
+    // Current printing layer
+    int currentLayer() const;
+
+    // Total printing layers
+    int totalLayers() const;
+
+    // Elapsed print time (seconds)
+    int printTime() const;
+
+    // Remaining print time (seconds)
+    int remainingTime() const;
+
+    // Printer state
+    int state() const;
+
 private:
 
-    // WebSocket communication
+    // Printer connection
     Connection connection;
 
-    // Message parser
+    // JSON parser
     Parser parser;
 
-    // Shared printer data
+    // Shared printer status
     PrinterStatus status;
 
     // Printer commands

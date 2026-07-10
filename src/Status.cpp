@@ -23,3 +23,39 @@ int PrinterStatus::targetBedTemp() const
 {
     return _targetBedTemp;
 }
+
+// Return print progress
+int PrinterStatus::progress() const
+{
+    return _progress;
+}
+
+// Return current layer
+int PrinterStatus::currentLayer() const
+{
+    return _currentLayer;
+}
+
+// Return total layers
+int PrinterStatus::totalLayers() const
+{
+    return _totalLayers;
+}
+
+// Return elapsed print time
+int PrinterStatus::printTime() const
+{
+    return _printTime;
+}
+
+// Return remaining print time
+int PrinterStatus::remainingTime() const
+{
+    return _remainingTime;
+}
+
+// Return printer state
+int PrinterStatus::state() const
+{
+    return _state;
+}

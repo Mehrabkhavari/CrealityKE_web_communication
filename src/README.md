@@ -2,7 +2,7 @@
 
 An open-source ESP32 library for communicating with Creality printers over WebSocket.
 
-> **Current Version:** v0.3.0
+> **Current Version:** v0.4.0
 
 ---
 
@@ -15,6 +15,12 @@ An open-source ESP32 library for communicating with Creality printers over WebSo
 - Bed temperature monitoring
 - Target nozzle temperature
 - Target bed temperature
+- Print progress
+- Current layer
+- Total layers
+- Elapsed print time
+- Remaining print time
+- Printer state
 - Lightweight architecture
 - Optimized for ESP32
 
@@ -40,7 +46,7 @@ Support for more Creality printers will be added in future releases.
 
 ## Installation
 
-Clone this repository into your Arduino libraries folder or install it manually.
+Clone this repository into your Arduino libraries folder.
 
 ```
 Documents/
@@ -80,8 +86,14 @@ void loop()
 {
     printer.loop();
 
+    Serial.print("Nozzle: ");
     Serial.println(printer.nozzleTemp());
+
+    Serial.print("Bed: ");
     Serial.println(printer.bedTemp());
+
+    Serial.print("Progress: ");
+    Serial.println(printer.progress());
 
     delay(1000);
 }
@@ -89,12 +101,12 @@ void loop()
 
 ---
 
-## Available API
+# Available API
 
-### Connection
+## Connection
 
 ```cpp
-printer.begin(ipAddress);
+printer.begin(ip);
 ```
 
 ```cpp
@@ -103,31 +115,88 @@ printer.loop();
 
 ---
 
-### Temperature
+## Temperature
 
 ```cpp
 printer.nozzleTemp();
 ```
 
-Returns the current nozzle temperature.
+Current nozzle temperature.
 
 ```cpp
 printer.bedTemp();
 ```
 
-Returns the current bed temperature.
+Current bed temperature.
 
 ```cpp
 printer.targetNozzleTemp();
 ```
 
-Returns the target nozzle temperature.
+Target nozzle temperature.
 
 ```cpp
 printer.targetBedTemp();
 ```
 
-Returns the target bed temperature.
+Target bed temperature.
+
+---
+
+## Print
+
+```cpp
+printer.progress();
+```
+
+Print progress percentage.
+
+```cpp
+printer.currentLayer();
+```
+
+Current printing layer.
+
+```cpp
+printer.totalLayers();
+```
+
+Total number of layers.
+
+```cpp
+printer.printTime();
+```
+
+Elapsed print time in seconds.
+
+```cpp
+printer.remainingTime();
+```
+
+Estimated remaining print time in seconds.
+
+```cpp
+printer.state();
+```
+
+Current printer state.
+
+---
+
+## Supported Messages
+
+The parser currently supports the following printer messages:
+
+- nozzleTemp
+- bedTemp0
+- targetNozzleTemp
+- targetBedTemp0
+- printProgress
+- layer
+- TotalLayer
+- printJobTime
+- printLeftTime
+- state
 
 ---
 
@@ -137,10 +206,10 @@ Returns the target bed temperature.
 CrealityKE
 │
 ├── src
+│   ├── Commands
 │   ├── Connection
 │   ├── Parser
 │   ├── Status
-│   ├── Commands
 │   └── CrealityKE
 │
 ├── examples
@@ -153,22 +222,25 @@ CrealityKE
 ## Architecture
 
 ```
+Printer
+    │
+    ▼
 WebSocket
-      │
-      ▼
- Connection
-      │
-      ▼
-   Parser
-      │
-      ▼
- PrinterStatus
-      │
-      ▼
- Public API
+    │
+    ▼
+Connection
+    │
+    ▼
+Parser
+    │
+    ▼
+PrinterStatus
+    │
+    ▼
+Public API
 ```
 
-Each module has a single responsibility, making the library easy to maintain and extend.
+Each module has a single responsibility, making the library easy to extend and maintain.
 
 ---
 
@@ -176,15 +248,12 @@ Each module has a single responsibility, making the library easy to maintain and
 
 Planned features:
 
-- Print progress
-- Current layer
-- Total layers
-- Remaining print time
-- Printer state
 - Fan status
-- Motion information
 - Printer information
+- Motion information
+- Material sensor
 - Remote printer control
+- G-code commands
 - Multi-printer support
 
 ---

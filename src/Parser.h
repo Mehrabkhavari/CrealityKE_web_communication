@@ -6,7 +6,7 @@
 
 #include "Status.h"
 
-// Parses printer messages
+// Parses incoming printer messages
 class Parser
 {
 public:
@@ -16,7 +16,7 @@ public:
     // Attach printer status object
     void begin(PrinterStatus* status);
 
-    // Parse incoming JSON message
+    // Parse incoming JSON
     void parse(const String& json);
 
 private:
@@ -24,7 +24,7 @@ private:
     // Shared printer status
     PrinterStatus* _status = nullptr;
 
-    // Parse temperature values
+    // Parse temperature data
     void parseTemperatures(JsonDocument& doc);
 
     // Parse print information
@@ -39,7 +39,7 @@ private:
     // Parse motion data
     void parseMotion(JsonDocument& doc);
 
-    // Parse system information
+    // Parse system data
     void parseSystem(JsonDocument& doc);
 };
 

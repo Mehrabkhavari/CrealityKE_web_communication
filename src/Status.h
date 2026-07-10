@@ -3,7 +3,7 @@
 
 class Parser;
 
-// Stores current printer data
+// Stores the latest printer status
 class PrinterStatus
 {
 public:
@@ -22,16 +22,48 @@ public:
     // Target bed temperature
     int targetBedTemp() const;
 
+    // Print progress (0-100)
+    int progress() const;
+
+    // Current printing layer
+    int currentLayer() const;
+
+    // Total print layers
+    int totalLayers() const;
+
+    // Elapsed print time (seconds)
+    int printTime() const;
+
+    // Remaining print time (seconds)
+    int remainingTime() const;
+
+    // Printer state
+    int state() const;
+
 private:
 
     // Allow parser to update values
     friend class Parser;
 
+    // Temperature data
     float _nozzleTemp = 0.0f;
     float _bedTemp = 0.0f;
 
+    // Target temperatures
     int _targetNozzleTemp = 0;
     int _targetBedTemp = 0;
+
+    // Print information
+    int _progress = 0;
+    int _currentLayer = 0;
+    int _totalLayers = 0;
+
+    // Print timing
+    int _printTime = 0;
+    int _remainingTime = 0;
+
+    // Printer state
+    int _state = 0;
 };
 
 #endif

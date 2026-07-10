@@ -22,7 +22,7 @@ void Parser::parse(const String& json)
     if (error)
         return;
 
-    // Parse each message category
+    // Parse each message group
     parseTemperatures(doc);
     parsePrint(doc);
     parseFans(doc);
@@ -71,22 +71,64 @@ void Parser::parseTemperatures(JsonDocument& doc)
     }
 }
 
-// Reserved for future versions
+// Parse print information
 void Parser::parsePrint(JsonDocument& doc)
 {
-    (void)doc;
+    JsonVariant value;
+
+    // Print progress
+    value = doc["printProgress"];
+    if (!value.isNull())
+    {
+        _status->_progress = value.as<int>();
+    }
+
+    // Current layer
+    value = doc["layer"];
+    if (!value.isNull())
+    {
+        _status->_currentLayer = value.as<int>();
+    }
+
+    // Total layers
+    value = doc["TotalLayer"];
+    if (!value.isNull())
+    {
+        _status->_totalLayers = value.as<int>();
+    }
+
+    // Elapsed print time
+    value = doc["printJobTime"];
+    if (!value.isNull())
+    {
+        _status->_printTime = value.as<int>();
+    }
+
+    // Remaining print time
+    value = doc["printLeftTime"];
+    if (!value.isNull())
+    {
+        _status->_remainingTime = value.as<int>();
+    }
 }
 
-// Reserved for future versions
+// Parse fan information
 void Parser::parseFans(JsonDocument& doc)
 {
     (void)doc;
 }
 
-// Reserved for future versions
+// Parse printer state
 void Parser::parseState(JsonDocument& doc)
 {
-    (void)doc;
+    JsonVariant value;
+
+    // Printer state
+    value = doc["state"];
+    if (!value.isNull())
+    {
+        _status->_state = value.as<int>();
+    }
 }
 
 // Reserved for future versions

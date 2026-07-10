@@ -1,21 +1,23 @@
 ﻿#include "CrealityKE.h"
 
-// Constructor
+// Initialize library
 CrealityKE::CrealityKE()
 {
-    // Connect parser to shared status object
+    // Attach parser to shared status
     parser.begin(&status);
 }
 
 // Connect to printer
 void CrealityKE::begin(const char* ip, uint16_t port)
 {
+    // Start WebSocket connection
     connection.begin(ip, &parser, port);
 }
 
-// Handle WebSocket events
+// Process WebSocket events
 void CrealityKE::loop()
 {
+    // Keep connection alive
     connection.loop();
 }
 
@@ -41,4 +43,40 @@ int CrealityKE::targetNozzleTemp() const
 int CrealityKE::targetBedTemp() const
 {
     return status.targetBedTemp();
+}
+
+// Return print progress
+int CrealityKE::progress() const
+{
+    return status.progress();
+}
+
+// Return current layer
+int CrealityKE::currentLayer() const
+{
+    return status.currentLayer();
+}
+
+// Return total layers
+int CrealityKE::totalLayers() const
+{
+    return status.totalLayers();
+}
+
+// Return elapsed print time
+int CrealityKE::printTime() const
+{
+    return status.printTime();
+}
+
+// Return remaining print time
+int CrealityKE::remainingTime() const
+{
+    return status.remainingTime();
+}
+
+// Return printer state
+int CrealityKE::state() const
+{
+    return status.state();
 }
