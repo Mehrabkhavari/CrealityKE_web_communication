@@ -1,13 +1,21 @@
 #include "Connection.h"
+#include "Parser.h"
+
+Connection* Connection::instance = nullptr;
 
 Connection::Connection()
 {
-
+    instance = this;
 }
 
-void Connection::begin(const char* ip,uint16_t port)
+void Connection::begin(
+    const char* ip,
+    Parser* parser,
+    uint16_t port)
 {
-    ws.begin(ip,port,"/");
+    _parser = parser;
+
+    ws.begin(ip, port, "/");
 
     ws.onEvent(webSocketEvent);
 
@@ -20,6 +28,17 @@ void Connection::loop()
 }
 
 void Connection::webSocketEvent(
+    WStype_t type,
+    uint8_t* payload,
+    size_t length)
+{
+    if(instance)
+    {
+        instance->onMessage(type, payload, length);
+    }
+}
+
+void Connection::onMessage(
     WStype_t type,
     uint8_t* payload,
     size_t length)
@@ -41,7 +60,10 @@ void Connection::webSocketEvent(
 
         case WStype_TEXT:
 
-            Serial.println((char*)payload);
+            if(_parser)
+            {
+                _parser->parse(String((char*)payload));
+            }
 
             break;
 

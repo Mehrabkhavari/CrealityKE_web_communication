@@ -1,84 +1,268 @@
-Version 0.0.1 - Project Initialization
-
-هدف
+\# CrealityKE
 
 
 
-در این مرحله تنها هدف، ایجاد ساختار اولیه کتابخانه است. هیچ‌یک از قابلیت‌های اصلی مانند پردازش JSON، مدیریت وضعیت پرینتر یا ارسال فرمان‌ها پیاده‌سازی نشده‌اند.
+An ESP32 library for communicating with Creality Ender series printers over WebSocket.
 
 
 
-ساختار پروژه
+> \*\*Project Status:\*\* Under Development 🚧
 
 
 
-پروژه به چند بخش مستقل تقسیم شده است تا هر قسمت تنها یک مسئولیت مشخص داشته باشد.
+\---
 
 
+
+\## Overview
+
+
+
+CrealityKE is an open-source ESP32 library designed to communicate directly with Creality printers through their built-in WebSocket interface.
+
+
+
+The goal of this project is to provide a simple and clean API for monitoring and controlling Creality printers without relying on external software such as OctoPrint or Moonraker.
+
+
+
+Ultimately, this library aims to become the core of custom projects such as:
+
+
+
+\- External printer status displays
+
+\- Print farm dashboards
+
+\- IoT monitoring systems
+
+\- Remote printer control panels
+
+\- Home Assistant integrations
+
+\- ESP32-based accessories
+
+
+
+\---
+
+
+
+\## Current Progress
+
+
+
+\### Version 0.0.1
+
+
+
+Current implementation includes:
+
+
+
+\- Project architecture
+
+\- Modular library structure
+
+\- WebSocket connection
+
+\- Automatic reconnect
+
+\- Receiving raw printer messages
+
+\- Separation of responsibilities between modules
+
+
+
+The JSON parser and printer status management are currently under development.
+
+
+
+\---
+
+
+
+\## Project Structure
+
+
+
+```
 
 CrealityKE
 
+│
 
+├── Connection
 
-کلاس اصلی کتابخانه که رابط کاربر با SDK است و سایر بخش‌ها را مدیریت می‌کند.
+│   Handles WebSocket communication
 
+│
 
+├── Parser
 
-Connection
+│   Parses incoming JSON messages
 
+│
 
+├── Status
 
-مسئول برقراری ارتباط WebSocket با پرینتر، مدیریت اتصال و دریافت پیام‌های خام.
+│   Stores printer state
 
+│
 
+├── Commands
 
-Parser
+│   Sends commands to the printer
 
+│
 
+└── CrealityKE
 
-در نسخه فعلی تنها به‌صورت اسکلت (Skeleton) ایجاد شده است. در نسخه‌های بعدی مسئول تجزیه پیام‌های JSON خواهد بود.
+&#x20;   Main user interface
 
-
-
-Status
-
-
-
-در حال حاضر فقط ساختار اولیه ایجاد شده است. در نسخه‌های بعدی تمامی اطلاعات پرینتر مانند دما، وضعیت چاپ و درصد پیشرفت در این بخش ذخیره خواهد شد.
-
-
-
-Commands
-
-
-
-فعلاً بدون پیاده‌سازی است. در آینده تمامی فرمان‌های کنترلی مانند Pause، Resume، Home و تنظیم دما در این بخش قرار خواهند گرفت.
+```
 
 
 
-قابلیت‌های پیاده‌سازی شده
+Each module has a single responsibility, making the library easy to maintain and extend.
 
-ایجاد ساختار اولیه کتابخانه
 
-جداسازی مسئولیت هر ماژول
 
-برقراری اتصال WebSocket با پرینتر
+\---
 
-دریافت پیام‌های خام از پرینتر
 
-نمایش پیام‌های دریافتی در Serial Monitor
 
-قابلیت Reconnect خودکار در صورت قطع ارتباط
+\## Planned Features
 
-قابلیت‌های نسخه بعد
 
-اتصال ماژول Connection به Parser
 
-پردازش پیام‌های JSON
+\- Read nozzle temperature
 
-استخراج اطلاعات دمای نازل و تخت
+\- Read bed temperature
 
-ذخیره اطلاعات در کلاس PrinterStatus
+\- Print progress
 
-ارائه توابع عمومی برای دسترسی به وضعیت پرینتر
+\- Current layer
+
+\- Total layers
+
+\- Remaining print time
+
+\- Current print speed
+
+\- Fan status
+
+\- File name
+
+\- Printer state
+
+\- Pause / Resume
+
+\- Stop print
+
+\- Temperature control
+
+\- Multi-printer support
+
+
+
+\---
+
+
+
+\## Example
+
+
+
+```cpp
+
+\#include <WiFi.h>
+
+\#include <CrealityKE.h>
+
+
+
+CrealityKE printer;
+
+
+
+void setup()
+
+{
+
+&#x20;   WiFi.begin(ssid, password);
+
+
+
+&#x20;   while (WiFi.status() != WL\_CONNECTED);
+
+
+
+&#x20;   printer.begin("192.168.0.156");
+
+}
+
+
+
+void loop()
+
+{
+
+&#x20;   printer.loop();
+
+}
+
+```
+
+
+
+\---
+
+
+
+\## Hardware
+
+
+
+Current development target:
+
+
+
+\- ESP32
+
+\- Creality Ender 3 V3 KE
+
+
+
+Additional Creality printers will be supported in future releases.
+
+
+
+\---
+
+
+
+\## License
+
+
+
+MIT License
+
+
+
+\---
+
+
+
+\## Author
+
+
+
+\*\*Mehrab Khavari\*\*
+
+
+
+GitHub:
+
+https://github.com/MehrabKhavari
 

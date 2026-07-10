@@ -1,6 +1,15 @@
 #include "Parser.h"
 
-void Parser::parse(const String& payload)
+Parser::Parser()
 {
 
+}
+
+void Parser::parse(const String& payload)
+{
+    Serial.println("========== Parser ==========");
+
+    Serial.println(payload);
+
+    Serial.println("============================");
 }

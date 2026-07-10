@@ -12,7 +12,9 @@ public:
 
     CrealityKE();
 
-    void begin(const char* ip,uint16_t port=9999);
+    void begin(
+        const char* ip,
+        uint16_t port = 9999);
 
     void loop();
 

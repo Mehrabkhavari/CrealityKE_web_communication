@@ -7,6 +7,8 @@ class Parser
 {
 public:
 
+    Parser();
+
     void parse(const String& payload);
 
 };
