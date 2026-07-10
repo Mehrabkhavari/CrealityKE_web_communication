@@ -17,7 +17,7 @@ void CrealityKE::begin(const char* ip, uint16_t port)
 // Process WebSocket events
 void CrealityKE::loop()
 {
-    // Keep connection alive
+    // Keep WebSocket alive
     connection.loop();
 }
 
@@ -51,13 +51,13 @@ int CrealityKE::progress() const
     return status.progress();
 }
 
-// Return current layer
+// Return current printing layer
 int CrealityKE::currentLayer() const
 {
     return status.currentLayer();
 }
 
-// Return total layers
+// Return total printing layers
 int CrealityKE::totalLayers() const
 {
     return status.totalLayers();
@@ -79,4 +79,40 @@ int CrealityKE::remainingTime() const
 int CrealityKE::state() const
 {
     return status.state();
+}
+
+// Return main fan status
+bool CrealityKE::fan() const
+{
+    return status.fan();
+}
+
+// Return model fan speed
+int CrealityKE::modelFan() const
+{
+    return status.modelFan();
+}
+
+// Return case fan speed
+int CrealityKE::caseFan() const
+{
+    return status.caseFan();
+}
+
+// Return auxiliary fan speed
+int CrealityKE::auxiliaryFan() const
+{
+    return status.auxiliaryFan();
+}
+
+// Return filament sensor status
+bool CrealityKE::materialDetected() const
+{
+    return status.materialDetected();
+}
+
+// Return filament availability
+bool CrealityKE::materialStatus() const
+{
+    return status.materialStatus();
 }

@@ -59,3 +59,39 @@ int PrinterStatus::state() const
 {
     return _state;
 }
+
+// Return main fan status
+bool PrinterStatus::fan() const
+{
+    return _fan;
+}
+
+// Return model fan speed
+int PrinterStatus::modelFan() const
+{
+    return _modelFan;
+}
+
+// Return case fan speed
+int PrinterStatus::caseFan() const
+{
+    return _caseFan;
+}
+
+// Return auxiliary fan speed
+int PrinterStatus::auxiliaryFan() const
+{
+    return _auxiliaryFan;
+}
+
+// Return filament sensor state
+bool PrinterStatus::materialDetected() const
+{
+    return _materialDetected;
+}
+
+// Return filament status
+bool PrinterStatus::materialStatus() const
+{
+    return _materialStatus;
+}

@@ -2,7 +2,7 @@
 
 An open-source ESP32 library for communicating with Creality printers over WebSocket.
 
-> **Current Version:** v0.4.0
+> **Current Version:** v0.5.0
 
 ---
 
@@ -11,16 +11,15 @@ An open-source ESP32 library for communicating with Creality printers over WebSo
 - WebSocket communication
 - Automatic reconnection
 - JSON message parsing
-- Nozzle temperature monitoring
-- Bed temperature monitoring
-- Target nozzle temperature
-- Target bed temperature
+- Nozzle temperature
+- Bed temperature
+- Target temperatures
 - Print progress
-- Current layer
-- Total layers
-- Elapsed print time
-- Remaining print time
+- Layer information
+- Print time
 - Printer state
+- Cooling system monitoring
+- Filament sensor monitoring
 - Lightweight architecture
 - Optimized for ESP32
 
@@ -32,7 +31,7 @@ Currently tested with:
 
 - Creality Ender-3 V3 KE
 
-Support for more Creality printers will be added in future releases.
+Support for additional Creality printers will be added in future releases.
 
 ---
 
@@ -46,7 +45,7 @@ Support for more Creality printers will be added in future releases.
 
 ## Installation
 
-Clone this repository into your Arduino libraries folder.
+Copy the library into your Arduino libraries folder.
 
 ```
 Documents/
@@ -93,7 +92,8 @@ void loop()
     Serial.println(printer.bedTemp());
 
     Serial.print("Progress: ");
-    Serial.println(printer.progress());
+    Serial.print(printer.progress());
+    Serial.println("%");
 
     delay(1000);
 }
@@ -149,43 +149,87 @@ Target bed temperature.
 printer.progress();
 ```
 
-Print progress percentage.
+Print progress.
 
 ```cpp
 printer.currentLayer();
 ```
 
-Current printing layer.
+Current layer.
 
 ```cpp
 printer.totalLayers();
 ```
 
-Total number of layers.
+Total layers.
 
 ```cpp
 printer.printTime();
 ```
 
-Elapsed print time in seconds.
+Elapsed print time (seconds).
 
 ```cpp
 printer.remainingTime();
 ```
 
-Estimated remaining print time in seconds.
+Remaining print time (seconds).
 
 ```cpp
 printer.state();
 ```
 
-Current printer state.
+Printer state.
+
+---
+
+## Cooling
+
+```cpp
+printer.fan();
+```
+
+Main fan status.
+
+```cpp
+printer.modelFan();
+```
+
+Model fan speed (%).
+
+```cpp
+printer.caseFan();
+```
+
+Case fan speed (%).
+
+```cpp
+printer.auxiliaryFan();
+```
+
+Auxiliary fan speed (%).
+
+---
+
+## Material Sensor
+
+```cpp
+printer.materialDetected();
+```
+
+Returns whether the filament sensor is enabled.
+
+```cpp
+printer.materialStatus();
+```
+
+Returns whether filament is detected.
 
 ---
 
 ## Supported Messages
 
-The parser currently supports the following printer messages:
+The parser currently supports:
 
 - nozzleTemp
 - bedTemp0
@@ -197,6 +241,12 @@ The parser currently supports the following printer messages:
 - printJobTime
 - printLeftTime
 - state
+- fan
+- modelFanPct
+- caseFanPct
+- auxiliaryFanPct
+- materialDetect
+- materialStatus
 
 ---
 
@@ -240,7 +290,7 @@ PrinterStatus
 Public API
 ```
 
-Each module has a single responsibility, making the library easy to extend and maintain.
+Each module has a single responsibility, making the library easy to maintain and extend.
 
 ---
 
@@ -248,10 +298,10 @@ Each module has a single responsibility, making the library easy to extend and m
 
 Planned features:
 
-- Fan status
 - Printer information
 - Motion information
-- Material sensor
+- AI detection status
+- Camera status
 - Remote printer control
 - G-code commands
 - Multi-printer support

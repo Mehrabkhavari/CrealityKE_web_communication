@@ -33,7 +33,7 @@ public:
     // Target bed temperature
     int targetBedTemp() const;
 
-    // Print progress (0-100)
+    // Print progress
     int progress() const;
 
     // Current printing layer
@@ -42,18 +42,36 @@ public:
     // Total printing layers
     int totalLayers() const;
 
-    // Elapsed print time (seconds)
+    // Elapsed print time
     int printTime() const;
 
-    // Remaining print time (seconds)
+    // Remaining print time
     int remainingTime() const;
 
     // Printer state
     int state() const;
 
+    // Main fan status
+    bool fan() const;
+
+    // Model fan speed
+    int modelFan() const;
+
+    // Case fan speed
+    int caseFan() const;
+
+    // Auxiliary fan speed
+    int auxiliaryFan() const;
+
+    // Filament sensor enabled
+    bool materialDetected() const;
+
+    // Filament status
+    bool materialStatus() const;
+
 private:
 
-    // Printer connection
+    // WebSocket connection
     Connection connection;
 
     // JSON parser

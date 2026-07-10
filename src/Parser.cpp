@@ -112,10 +112,52 @@ void Parser::parsePrint(JsonDocument& doc)
     }
 }
 
-// Parse fan information
+// Parse cooling system
 void Parser::parseFans(JsonDocument& doc)
 {
-    (void)doc;
+    JsonVariant value;
+
+    // Main fan status
+    value = doc["fan"];
+    if (!value.isNull())
+    {
+        _status->_fan = value.as<int>() != 0;
+    }
+
+    // Model fan speed
+    value = doc["modelFanPct"];
+    if (!value.isNull())
+    {
+        _status->_modelFan = value.as<int>();
+    }
+
+    // Case fan speed
+    value = doc["caseFanPct"];
+    if (!value.isNull())
+    {
+        _status->_caseFan = value.as<int>();
+    }
+
+    // Auxiliary fan speed
+    value = doc["auxiliaryFanPct"];
+    if (!value.isNull())
+    {
+        _status->_auxiliaryFan = value.as<int>();
+    }
+
+    // Filament sensor enabled
+    value = doc["materialDetect"];
+    if (!value.isNull())
+    {
+        _status->_materialDetected = value.as<int>() != 0;
+    }
+
+    // Filament available
+    value = doc["materialStatus"];
+    if (!value.isNull())
+    {
+        _status->_materialStatus = value.as<int>() != 0;
+    }
 }
 
 // Parse printer state

@@ -40,6 +40,24 @@ public:
     // Printer state
     int state() const;
 
+    // Main fan status
+    bool fan() const;
+
+    // Model fan speed (0-100)
+    int modelFan() const;
+
+    // Case fan speed (0-100)
+    int caseFan() const;
+
+    // Auxiliary fan speed (0-100)
+    int auxiliaryFan() const;
+
+    // Filament sensor enabled
+    bool materialDetected() const;
+
+    // Filament available
+    bool materialStatus() const;
+
 private:
 
     // Allow parser to update values
@@ -64,6 +82,16 @@ private:
 
     // Printer state
     int _state = 0;
+
+    // Cooling system
+    bool _fan = false;
+    int _modelFan = 0;
+    int _caseFan = 0;
+    int _auxiliaryFan = 0;
+
+    // Material sensor
+    bool _materialDetected = false;
+    bool _materialStatus = false;
 };
 
 #endif
