@@ -2,65 +2,45 @@
 #define PARSER_H
 
 #include <Arduino.h>
+#include <ArduinoJson.h>
+
 #include "Status.h"
 
-/*
-    --------------------------------------------------------------------
-
-    Parser
-
-    وظیفه این کلاس فقط و فقط تجزیه پیام‌های دریافتی از پرینتر است.
-
-    این کلاس هیچ اطلاعی از WebSocket ندارد.
-
-    هیچ اطلاعی از ESP32 ندارد.
-
-    هیچ اطلاعی از Serial ندارد.
-
-    تنها کاری که انجام می‌دهد:
-
-        JSON -----> PrinterStatus
-
-    --------------------------------------------------------------------
-*/
-
+// Parses printer messages
 class Parser
 {
 public:
 
-    Parser();
+    Parser() = default;
 
-    /*
-        begin()
-
-        آدرس Struct مربوط به وضعیت پرینتر را دریافت می‌کند.
-
-        بعد از این مرحله هر اطلاعاتی که از پرینتر دریافت شود
-        داخل همین Struct ذخیره خواهد شد.
-    */
+    // Attach printer status object
     void begin(PrinterStatus* status);
 
-    /*
-        parse()
-
-        در نسخه فعلی فقط پیام دریافتی را نمایش می‌دهد.
-
-        در نسخه بعدی JSON را تجزیه خواهد کرد.
-    */
-    void parse(const String& payload);
+    // Parse incoming JSON message
+    void parse(const String& json);
 
 private:
 
-    /*
-        اشاره‌گر به وضعیت پرینتر
+    // Shared printer status
+    PrinterStatus* _status = nullptr;
 
-        دلیل استفاده از Pointer این است که نمی‌خواهیم
-        یک کپی جدید از PrinterStatus ساخته شود.
+    // Parse temperature values
+    void parseTemperatures(JsonDocument& doc);
 
-        تمام کلاس‌ها روی یک حافظه مشترک کار خواهند کرد.
-    */
-    PrinterStatus* _status;
+    // Parse print information
+    void parsePrint(JsonDocument& doc);
 
+    // Parse fan information
+    void parseFans(JsonDocument& doc);
+
+    // Parse printer state
+    void parseState(JsonDocument& doc);
+
+    // Parse motion data
+    void parseMotion(JsonDocument& doc);
+
+    // Parse system information
+    void parseSystem(JsonDocument& doc);
 };
 
 #endif

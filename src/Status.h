@@ -1,84 +1,37 @@
 ﻿#ifndef STATUS_H
 #define STATUS_H
 
-#include <Arduino.h>
+class Parser;
 
-/*
-    --------------------------------------------------------------------
-    PrinterStatus
-
-    این Struct حافظه‌ای برای نگهداری آخرین وضعیت پرینتر است.
-
-    Parser بعد از دریافت هر پیام از پرینتر، مقادیر داخل این Struct
-    را به‌روزرسانی می‌کند.
-
-    بنابراین هیچ کدام از کلاس‌های دیگر مستقیماً JSON را پردازش
-    نمی‌کنند و فقط اطلاعات را از این Struct می‌خوانند.
-
-    در آینده تمام وضعیت پرینتر فقط از همین Struct قابل دسترسی خواهد بود.
-
-    مثال:
-
-    printer.status().nozzleTemp
-    printer.status().bedTemp
-    printer.status().progress
-    printer.status().state
-
-    --------------------------------------------------------------------
-*/
-
-struct PrinterStatus
+// Stores current printer data
+class PrinterStatus
 {
-    //==================== Temperatures ====================//
+public:
 
-    // دمای فعلی نازل
-    float nozzleTemp = 0;
+    PrinterStatus() = default;
 
-    // دمای فعلی تخت
-    float bedTemp = 0;
+    // Current nozzle temperature
+    float nozzleTemp() const;
 
-    // دمای هدف نازل
-    float targetNozzleTemp = 0;
+    // Current bed temperature
+    float bedTemp() const;
 
-    // دمای هدف تخت
-    float targetBedTemp = 0;
+    // Target nozzle temperature
+    int targetNozzleTemp() const;
 
-    //==================== Printing ====================//
+    // Target bed temperature
+    int targetBedTemp() const;
 
-    // درصد پیشرفت چاپ
-    int progress = 0;
+private:
 
-    // شماره لایه فعلی
-    int layer = 0;
+    // Allow parser to update values
+    friend class Parser;
 
-    // تعداد کل لایه‌ها
-    int totalLayer = 0;
+    float _nozzleTemp = 0.0f;
+    float _bedTemp = 0.0f;
 
-    // مدت زمان سپری شده از چاپ (ثانیه)
-    int printTime = 0;
-
-    // زمان باقی‌مانده (ثانیه)
-    int remainTime = 0;
-
-    //==================== Printer ====================//
-
-    // وضعیت فعلی پرینتر
-    //
-    // مقدار این متغیر بعداً به Enum تبدیل خواهد شد.
-    //
-    // فعلاً نمونه:
-    //
-    // 0 = Idle
-    // 1 = Printing
-    // 2 = Pause
-    //
-    int state = 0;
-
-    // وضعیت فن اصلی
-    int fan = 0;
-
-    // نام فایل در حال چاپ
-    String fileName = "";
+    int _targetNozzleTemp = 0;
+    int _targetBedTemp = 0;
 };
 
 #endif

@@ -1,89 +1,51 @@
 ﻿#ifndef CREALITYKE_H
 #define CREALITYKE_H
 
+#include <Arduino.h>
+
 #include "Connection.h"
 #include "Parser.h"
 #include "Status.h"
 #include "Commands.h"
 
-/*
-    ===============================================================
-
-    CrealityKE
-
-    این کلاس تنها کلاسی است که کاربر کتابخانه با آن کار می‌کند.
-
-    هدف این است که کاربر هیچ نیازی به دانستن جزئیات داخلی
-    مانند WebSocket، Parser یا JSON نداشته باشد.
-
-    معماری داخلی کتابخانه:
-
-            User
-              │
-              ▼
-         CrealityKE
-        ├──────────┐
-        ▼          ▼
-    Connection   Parser
-                     │
-                     ▼
-               PrinterStatus
-
-    ===============================================================
-*/
-
+// Main library class
 class CrealityKE
 {
 public:
 
     CrealityKE();
 
-    /*
-        اتصال به پرینتر
+    // Connect to printer
+    void begin(const char* ip, uint16_t port = 9999);
 
-        ip:
-            آدرس IP پرینتر
-
-        port:
-            پورت WebSocket
-            مقدار پیش‌فرض 9999 است.
-    */
-    void begin(
-        const char* ip,
-        uint16_t port = 9999);
-
-    /*
-        باید داخل loop برنامه اجرا شود.
-    */
+    // Process WebSocket events
     void loop();
+
+    // Current nozzle temperature
+    float nozzleTemp() const;
+
+    // Current bed temperature
+    float bedTemp() const;
+
+    // Target nozzle temperature
+    int targetNozzleTemp() const;
+
+    // Target bed temperature
+    int targetBedTemp() const;
 
 private:
 
-    /*
-        مدیریت ارتباط
-    */
+    // WebSocket communication
     Connection connection;
 
-    /*
-        تجزیه پیام‌ها
-    */
+    // Message parser
     Parser parser;
 
-    /*
-        وضعیت فعلی پرینتر
-
-        Parser اطلاعات دریافتی را داخل این Struct
-        ذخیره خواهد کرد.
-    */
+    // Shared printer data
     PrinterStatus status;
 
-    /*
-        دستورات ارسالی
-
-        فعلاً استفاده نمی‌شود.
-    */
+    // Printer commands
     Commands commands;
-
 };
 
 #endif

@@ -2,135 +2,190 @@
 
 An open-source ESP32 library for communicating with Creality printers over WebSocket.
 
----
-
-## Current Version
-
-**v0.2.0**
+> **Current Version:** v0.3.0
 
 ---
 
-## Project Goals
+## Features
 
-The purpose of this project is to provide a lightweight and modular SDK for ESP32 that can communicate directly with Creality printers without requiring OctoPrint, Moonraker or other middleware.
-
-The library is designed with scalability in mind and will eventually support:
-
-- Printer monitoring
-- Remote control
-- Multi-printer management
-- ESP32 dashboards
-- Home Assistant integration
-- IoT applications
-
----
-
-## Current Features
-
-✔ Modular project architecture
-
-✔ WebSocket communication
-
-✔ Automatic reconnect
-
-✔ Dedicated communication layer
-
-✔ Dedicated parser layer
-
-✔ Shared printer status model
-
-✔ Object-oriented design
+- WebSocket communication
+- Automatic reconnection
+- JSON message parsing
+- Nozzle temperature monitoring
+- Bed temperature monitoring
+- Target nozzle temperature
+- Target bed temperature
+- Lightweight architecture
+- Optimized for ESP32
 
 ---
 
-## Architecture
+## Supported Printers
+
+Currently tested with:
+
+- Creality Ender-3 V3 KE
+
+Support for more Creality printers will be added in future releases.
+
+---
+
+## Dependencies
+
+- ArduinoJson
+- ArduinoWebsockets
+- WiFi (ESP32)
+
+---
+
+## Installation
+
+Clone this repository into your Arduino libraries folder or install it manually.
 
 ```
-                User
-                  │
-                  ▼
-             CrealityKE
-          ┌──────────────┐
-          ▼              ▼
-    Connection       Parser
-                          │
-                          ▼
-                    PrinterStatus
+Documents/
+└── Arduino/
+    └── libraries/
+        └── CrealityKE/
 ```
 
-Each module has a single responsibility.
+---
 
-This design makes the library easier to maintain, extend and debug.
+## Quick Start
+
+```cpp
+#include <WiFi.h>
+#include <CrealityKE.h>
+
+const char* ssid = "YOUR_WIFI";
+const char* password = "YOUR_PASSWORD";
+
+CrealityKE printer;
+
+void setup()
+{
+    Serial.begin(115200);
+
+    WiFi.begin(ssid, password);
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(500);
+    }
+
+    printer.begin("192.168.0.156");
+}
+
+void loop()
+{
+    printer.loop();
+
+    Serial.println(printer.nozzleTemp());
+    Serial.println(printer.bedTemp());
+
+    delay(1000);
+}
+```
+
+---
+
+## Available API
+
+### Connection
+
+```cpp
+printer.begin(ipAddress);
+```
+
+```cpp
+printer.loop();
+```
+
+---
+
+### Temperature
+
+```cpp
+printer.nozzleTemp();
+```
+
+Returns the current nozzle temperature.
+
+```cpp
+printer.bedTemp();
+```
+
+Returns the current bed temperature.
+
+```cpp
+printer.targetNozzleTemp();
+```
+
+Returns the target nozzle temperature.
+
+```cpp
+printer.targetBedTemp();
+```
+
+Returns the target bed temperature.
 
 ---
 
 ## Project Structure
 
 ```
-src/
-
-Connection
-Handles WebSocket communication.
-
-Parser
-Processes incoming printer messages.
-
-Status
-Stores the current printer status.
-
-Commands
-Will contain all printer commands.
-
 CrealityKE
-Main public interface.
+│
+├── src
+│   ├── Connection
+│   ├── Parser
+│   ├── Status
+│   ├── Commands
+│   └── CrealityKE
+│
+├── examples
+│
+└── library.properties
 ```
 
 ---
 
-## Development Status
+## Architecture
 
-### v0.1.0
+```
+WebSocket
+      │
+      ▼
+ Connection
+      │
+      ▼
+   Parser
+      │
+      ▼
+ PrinterStatus
+      │
+      ▼
+ Public API
+```
 
-- Initial library structure
-- WebSocket connection
-- Automatic reconnect
+Each module has a single responsibility, making the library easy to maintain and extend.
 
 ---
 
-### v0.2.0
+## Roadmap
 
-- Added PrinterStatus model
-- Connected Parser to shared status object
-- Connection now forwards messages to Parser
-- Improved internal architecture
+Planned features:
 
----
-
-## Planned Features
-
-- JSON parser
-- Nozzle temperature
-- Bed temperature
-- Target temperatures
 - Print progress
 - Current layer
 - Total layers
 - Remaining print time
 - Printer state
 - Fan status
-- Pause / Resume
-- Stop print
-- Temperature control
+- Motion information
+- Printer information
+- Remote printer control
 - Multi-printer support
-
----
-
-## Hardware
-
-Currently tested with:
-
-- ESP32
-- Creality Ender-3 V3 KE
 
 ---
 

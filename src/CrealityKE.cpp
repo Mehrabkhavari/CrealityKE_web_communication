@@ -1,32 +1,44 @@
 ﻿#include "CrealityKE.h"
 
-/*
-    Constructor
-
-    اینجا ارتباط بین Parser و PrinterStatus برقرار می‌شود.
-
-    از این لحظه هر اطلاعاتی که Parser استخراج کند،
-    مستقیماً داخل status ذخیره خواهد شد.
-*/
+// Constructor
 CrealityKE::CrealityKE()
 {
+    // Connect parser to shared status object
     parser.begin(&status);
 }
 
-/*
-    شروع ارتباط با پرینتر
-*/
-void CrealityKE::begin(
-    const char* ip,
-    uint16_t port)
+// Connect to printer
+void CrealityKE::begin(const char* ip, uint16_t port)
 {
     connection.begin(ip, &parser, port);
 }
 
-/*
-    پردازش ارتباط WebSocket
-*/
+// Handle WebSocket events
 void CrealityKE::loop()
 {
     connection.loop();
+}
+
+// Return current nozzle temperature
+float CrealityKE::nozzleTemp() const
+{
+    return status.nozzleTemp();
+}
+
+// Return current bed temperature
+float CrealityKE::bedTemp() const
+{
+    return status.bedTemp();
+}
+
+// Return target nozzle temperature
+int CrealityKE::targetNozzleTemp() const
+{
+    return status.targetNozzleTemp();
+}
+
+// Return target bed temperature
+int CrealityKE::targetBedTemp() const
+{
+    return status.targetBedTemp();
 }
