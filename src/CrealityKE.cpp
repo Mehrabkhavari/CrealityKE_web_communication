@@ -5,6 +5,9 @@ CrealityKE::CrealityKE()
 {
     // Attach parser to shared status
     parser.begin(&status);
+
+    // Attach connection to command manager
+    commands.begin(&connection);
 }
 
 // Connect to printer
@@ -19,6 +22,12 @@ void CrealityKE::loop()
 {
     // Keep WebSocket alive
     connection.loop();
+}
+
+// Send raw JSON command
+bool CrealityKE::send(const String& json)
+{
+    return commands.send(json);
 }
 
 // Return current nozzle temperature

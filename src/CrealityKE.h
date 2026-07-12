@@ -3,10 +3,10 @@
 
 #include <Arduino.h>
 
+#include "Commands.h"
 #include "Connection.h"
 #include "Parser.h"
 #include "Status.h"
-#include "Commands.h"
 
 // Main library class
 class CrealityKE
@@ -20,6 +20,9 @@ public:
 
     // Process WebSocket events
     void loop();
+
+    // Send raw JSON command
+    bool send(const String& json);
 
     // Current nozzle temperature
     float nozzleTemp() const;
@@ -78,7 +81,7 @@ public:
     // Firmware information
     const String& version() const;
 
-    // Printer connection status
+    // Printer connection state
     bool connected() const;
 
     // Maximum nozzle temperature
@@ -95,10 +98,10 @@ private:
     // JSON parser
     Parser parser;
 
-    // Shared printer status
+    // Printer status
     PrinterStatus status;
 
-    // Printer commands
+    // Command manager
     Commands commands;
 };
 
