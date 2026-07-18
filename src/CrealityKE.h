@@ -21,8 +21,10 @@ public:
     // Process WebSocket events
     void loop();
 
-    // Send raw JSON command
-    bool send(const String& json);
+    // Temperature control
+    bool setNozzleTemp(uint16_t temperature);
+
+    bool setBedTemp(uint16_t temperature);
 
     // Current nozzle temperature
     float nozzleTemp() const;

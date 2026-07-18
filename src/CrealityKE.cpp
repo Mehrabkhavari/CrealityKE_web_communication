@@ -24,10 +24,16 @@ void CrealityKE::loop()
     connection.loop();
 }
 
-// Send raw JSON command
-bool CrealityKE::send(const String& json)
+// Set nozzle temperature
+bool CrealityKE::setNozzleTemp(uint16_t temperature)
 {
-    return commands.send(json);
+    return commands.setNozzleTemp(temperature);
+}
+
+// Set bed temperature
+bool CrealityKE::setBedTemp(uint16_t temperature)
+{
+    return commands.setBedTemp(temperature);
 }
 
 // Return current nozzle temperature

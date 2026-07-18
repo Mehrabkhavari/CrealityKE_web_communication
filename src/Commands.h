@@ -18,6 +18,11 @@ public:
     // Send raw JSON command
     bool send(const String& json);
 
+    // Temperature control
+    bool setNozzleTemp(uint16_t temperature);
+
+    bool setBedTemp(uint16_t temperature);
+
 protected:
 
     // Shared printer connection
