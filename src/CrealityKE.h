@@ -21,10 +21,30 @@ public:
     // Process WebSocket events
     void loop();
 
-    // Temperature control
-    bool setNozzleTemp(uint16_t temperature);
+    // Raw communication
+    bool sendRaw(const String& json);
+    bool sendGet(const String& parameter);
+    bool sendSet(const String& parameter, const String& value);
 
-    bool setBedTemp(uint16_t temperature);
+    // Temperature control
+    bool setNozzleTemp(int temperature);
+    bool setBedTemp(int temperature);
+
+    // Homing
+    bool homeX();
+    bool homeY();
+    bool homeZ();
+
+    bool homeXY();
+    bool homeXZ();
+    bool homeYZ();
+
+    bool homeXYZ();
+
+    // Print control
+    bool pause();
+    bool resume();
+    bool stop();
 
     // Current nozzle temperature
     float nozzleTemp() const;
@@ -94,16 +114,9 @@ public:
 
 private:
 
-    // WebSocket connection
     Connection connection;
-
-    // JSON parser
     Parser parser;
-
-    // Printer status
     PrinterStatus status;
-
-    // Command manager
     Commands commands;
 };
 

@@ -3,37 +3,99 @@
 // Initialize library
 CrealityKE::CrealityKE()
 {
-    // Attach parser to shared status
     parser.begin(&status);
-
-    // Attach connection to command manager
     commands.begin(&connection);
 }
 
 // Connect to printer
 void CrealityKE::begin(const char* ip, uint16_t port)
 {
-    // Start WebSocket connection
     connection.begin(ip, &parser, port);
 }
 
 // Process WebSocket events
 void CrealityKE::loop()
 {
-    // Keep WebSocket alive
     connection.loop();
 }
 
-// Set nozzle temperature
-bool CrealityKE::setNozzleTemp(uint16_t temperature)
+// Raw communication
+bool CrealityKE::sendRaw(const String& json)
+{
+    return commands.sendRaw(json);
+}
+
+bool CrealityKE::sendGet(const String& parameter)
+{
+    return commands.sendGet(parameter);
+}
+
+bool CrealityKE::sendSet(const String& parameter, const String& value)
+{
+    return commands.sendSet(parameter, value);
+}
+
+// Temperature control
+bool CrealityKE::setNozzleTemp(int temperature)
 {
     return commands.setNozzleTemp(temperature);
 }
 
-// Set bed temperature
-bool CrealityKE::setBedTemp(uint16_t temperature)
+bool CrealityKE::setBedTemp(int temperature)
 {
     return commands.setBedTemp(temperature);
+}
+
+// Homing
+bool CrealityKE::homeX()
+{
+    return commands.homeX();
+}
+
+bool CrealityKE::homeY()
+{
+    return commands.homeY();
+}
+
+bool CrealityKE::homeZ()
+{
+    return commands.homeZ();
+}
+
+bool CrealityKE::homeXY()
+{
+    return commands.homeXY();
+}
+
+bool CrealityKE::homeXZ()
+{
+    return commands.homeXZ();
+}
+
+bool CrealityKE::homeYZ()
+{
+    return commands.homeYZ();
+}
+
+bool CrealityKE::homeXYZ()
+{
+    return commands.homeXYZ();
+}
+
+// Print control
+bool CrealityKE::pause()
+{
+    return commands.pause();
+}
+
+bool CrealityKE::resume()
+{
+    return commands.resume();
+}
+
+bool CrealityKE::stop()
+{
+    return commands.stop();
 }
 
 // Return current nozzle temperature

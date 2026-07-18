@@ -1,8 +1,6 @@
 #include "Commands.h"
 #include "Connection.h"
 
-#include <ArduinoJson.h>
-
 // Constructor
 Commands::Commands()
 {
@@ -14,33 +12,101 @@ void Commands::begin(Connection* connection)
     _connection = connection;
 }
 
-// Set nozzle temperature
-bool Commands::setNozzleTemp(uint16_t temperature)
+// Send raw JSON command
+bool Commands::sendRaw(const String& json)
 {
-    // Check connection
     if (_connection == nullptr)
         return false;
 
-    StaticJsonDocument<64> params;
+    return _connection->sendRaw(json);
+}
 
-    params["nozzleTempControl"] = temperature;
+// Send GET request
+bool Commands::sendGet(const String& parameter)
+{
+    if (_connection == nullptr)
+        return false;
 
-    return _connection->sendSet(params);
+    return _connection->sendGet(parameter);
+}
+
+// Send SET request
+bool Commands::sendSet(const String& parameter, const String& value)
+{
+    if (_connection == nullptr)
+        return false;
+
+    return _connection->sendSet(parameter, value);
+}
+
+// Set nozzle temperature
+bool Commands::setNozzleTemp(int temperature)
+{
+    return sendSet("nozzleTemp", String(temperature));
 }
 
 // Set bed temperature
-bool Commands::setBedTemp(uint16_t temperature)
+bool Commands::setBedTemp(int temperature)
 {
-    // Check connection
-    if (_connection == nullptr)
-        return false;
+    return sendSet("bedTemp0", String(temperature));
+}
 
-    StaticJsonDocument<96> params;
+// Home X
+bool Commands::homeX()
+{
+    return sendRaw("{\"method\":\"set\",\"params\":{\"home\":\"X\"}}");
+}
 
-    JsonObject bed = params.createNestedObject("bedTempControl");
+// Home Y
+bool Commands::homeY()
+{
+    return sendRaw("{\"method\":\"set\",\"params\":{\"home\":\"Y\"}}");
+}
 
-    bed["num"] = 0;
-    bed["val"] = temperature;
+// Home Z
+bool Commands::homeZ()
+{
+    return sendRaw("{\"method\":\"set\",\"params\":{\"home\":\"Z\"}}");
+}
 
-    return _connection->sendSet(params);
+// Home XY
+bool Commands::homeXY()
+{
+    return sendRaw("{\"method\":\"set\",\"params\":{\"home\":\"XY\"}}");
+}
+
+// Home XZ
+bool Commands::homeXZ()
+{
+    return sendRaw("{\"method\":\"set\",\"params\":{\"home\":\"XZ\"}}");
+}
+
+// Home YZ
+bool Commands::homeYZ()
+{
+    return sendRaw("{\"method\":\"set\",\"params\":{\"home\":\"YZ\"}}");
+}
+
+// Home XYZ
+bool Commands::homeXYZ()
+{
+    return sendRaw("{\"method\":\"set\",\"params\":{\"home\":\"XYZ\"}}");
+}
+
+// Pause print
+bool Commands::pause()
+{
+    return sendSet("pause", "1");
+}
+
+// Resume print
+bool Commands::resume()
+{
+    return sendSet("pause", "0");
+}
+
+// Stop print
+bool Commands::stop()
+{
+    return sendSet("stop", "1");
 }
