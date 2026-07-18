@@ -1,12 +1,3 @@
-# CrealityKE
-
-A lightweight Arduino library for controlling and monitoring Creality K1/KE series 3D printers over the local network using the native Creality WebSocket protocol.
-
-Designed for ESP32, ESP8266 and other Arduino-compatible boards.
-
----
-
-
 # 🖨️ CrealityKE
 
 <p align="center">
