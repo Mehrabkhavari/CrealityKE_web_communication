@@ -199,38 +199,6 @@ Building tools that connect creativity, electronics and manufacturing. ⚡
 
 ---
 
-## Supported Boards
-
-- ESP32
-- ESP8266
-- Arduino boards with WebSocket support
-
----
-
-## Supported Printers
-
-Tested on
-
-- Creality Ender-3 V3 KE
-
-Expected to work with other Creality printers using the same WebSocket protocol.
-
----
-
-## Installation
-
-### Arduino IDE
-
-Download the latest release from GitHub.
-
-Or install manually into
-
-```
-Documents/Arduino/libraries/
-```
-
----
-
 ## Quick Start
 
 ```cpp
@@ -288,31 +256,6 @@ printer.homeXYZ();
 Documentation is available in the `/docs` directory.
 
 Examples are available in the `/examples` directory.
-
----
-
-## Version
-
-Current stable release
-
-```
-v1.0.0
-```
-
----
-
-## Roadmap
-
-Planned features
-
-- Print file management
-- Motion control
-- Fan control
-- LED control
-- Camera support
-- Timelapse control
-- Full printer information
-- Automatic printer discovery
 
 ---
 
