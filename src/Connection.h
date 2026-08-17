@@ -2,7 +2,6 @@
 #define CONNECTION_H
 
 #include <Arduino.h>
-#include <ArduinoJson.h>
 #include <ArduinoWebsockets.h>
 
 class Parser;
@@ -10,6 +9,8 @@ class Parser;
 // Handles WebSocket communication
 class Connection
 {
+    friend class Commands;
+
 public:
 
     Connection();
@@ -20,14 +21,14 @@ public:
 
     bool connected() const;
 
-    // Send raw JSON document
-    bool sendRaw(JsonDocument& doc);
+    // Send raw JSON
+    bool sendRaw(const String& json);
 
     // Send {"method":"set","params":{...}}
-    bool sendSet(JsonDocument& params);
+    bool sendSet(const String& parameter, const String& value);
 
     // Send {"method":"get","params":{...}}
-    bool sendGet(JsonDocument& params);
+    bool sendGet(const String& parameter);
 
 private:
 
